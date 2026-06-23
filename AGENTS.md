@@ -164,7 +164,7 @@ candidate | confirmed | rejected
 
 ## 当前已知原材料
 
-- `resources/AI Agent Loop 到底是不是神技.pdf`
-- `resources/Kimi 唐飞虎讲透 Agent 失忆问题.pdf`
+- `resources/ai-agent-loop-is-it-really-a-killer-technique.pdf`
+- `resources/kimi-tang-feihu-explains-agent-memory-loss.pdf`
 
 这两份材料很可能分别支撑两个底层概念：agent loop 与 agent 记忆/上下文管理。后续 agent 应先阅读材料本身，再确认这两个概念如何进入最终 PPT。
