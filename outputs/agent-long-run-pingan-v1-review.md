@@ -4,7 +4,7 @@
 
 - 版本：v1
 - PPT 文件：`outputs/agent-long-run-pingan-v1.ppt`
-- 本地可下载 PPTX：`outputs/agent-long-run-pingan-v1.pptx`
+- 本地可下载 PPT：`outputs/agent-long-run-pingan-v1.ppt`
 - 审查文件：`outputs/agent-long-run-pingan-v1-review.md`
 - 目标分支：`ppt-v1`
 
@@ -67,7 +67,7 @@ PPT 共 14 页：
 
 - 采用橙色、白色、浅灰与少量绿色作为主视觉，参考中国平安商务演示常见的高对比橙白风格。
 - 每页采用统一页眉、标签、卡片和留白结构。
-- 已在本地将 PPTX 渲染为 PDF 并生成总览图检查；未发现图形重叠或遮挡。
+- 已在本地将 PPT 渲染为 PDF 并生成总览图检查；未发现图形重叠或遮挡。
 - 文字密度控制在可演讲范围；页面内容用于提示，详细解释留给讲者。
 
 ## 需要后续人工确认的事项
