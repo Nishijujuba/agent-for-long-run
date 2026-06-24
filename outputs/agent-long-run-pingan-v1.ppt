@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>让 Agent 做好长程任务 v1</title>
+<style>
+@page { size: 13.333in 7.5in; margin:0; }
+body { margin:0; background:#eee; font-family:"Microsoft YaHei", Arial, sans-serif; color:#263238; }
+.slide { width:13.333in; height:7.5in; box-sizing:border-box; page-break-after:always; background:#F7F8F5; position:relative; padding:.72in .72in .55in .72in; overflow:hidden; }
+.cover { background:#F58220; padding:.75in; }
+.cover .white { background:white; width:7.45in; height:5.85in; padding:.36in; box-sizing:border-box; }
+.cover .right { position:absolute; right:0; top:0; width:4.98in; height:7.5in; background:#D95E00; color:white; text-align:center; }
+.bar { position:absolute; left:0; top:0; height:.22in; width:100%; background:#F58220; }
+.tag { display:inline-block; background:#F58220; color:white; padding:.06in .18in; font-size:11pt; font-weight:700; }
+h1 { margin:.28in 0 .08in 0; font-size:27pt; line-height:1.1; }
+h2 { margin:.2in 0 .1in 0; font-size:22pt; line-height:1.15; }
+.sub { color:#6B7280; font-size:12pt; margin:.03in 0 .26in 0; }
+.card { background:white; padding:.35in; min-height:2.55in; margin-top:.28in; box-sizing:border-box; }
+.side { position:absolute; right:.75in; top:.8in; width:2.8in; min-height:.62in; background:#FFF3E6; padding:.14in; color:#D95E00; font-size:9pt; font-weight:700; }
+ul { margin:.05in 0 0 .18in; padding:0; font-size:15pt; line-height:1.55; }
+.foot { position:absolute; bottom:.32in; left:.72in; color:#006B3F; font-size:8pt; }
+.green { width:1.1in; height:.08in; background:#006B3F; margin:.35in 0 .25in 0; }
+.small { font-size:12pt; color:#6B7280; }
+</style>
+</head>
+<body>
+<section class="slide cover"><div class="right"><p style="margin-top:.75in;font-size:12pt;font-weight:700">PING AN 风格参考</p><p style="margin-top:4.8in;font-size:15pt;font-weight:700">Version v1</p></div><div class="white"><div class="tag" style="background:#FFF3E6;color:#F58220">中国平安风格 · v1</div><h1>让 Agent 做好长程任务</h1><p class="sub" style="font-size:18pt">从更长 Prompt 到可恢复、可验证、可限权的工程系统</p><div class="green"></div><p class="small">知识工作者协作方法：税务 / 程序 / 数据 / 算法 / 平台运营</p><p class="small">agent-for-long-run · outputs/agent-long-run-pingan-v1.ppt</p></div></section>
+<section class="slide"><div class="bar"></div><div class="tag">引入</div><h2>长程任务为什么会把 Agent 拖垮？</h2><p class="sub">动机：长链路缺少护栏时，目标、上下文、循环、权限都会失控。</p><div class="side">核心问题</div><div class="card"><ul><li>人类负责目标、判断和责任；Agent 负责检索、生成、执行和自检。</li><li>系统负责证据、权限、预算、日志和状态。</li></ul></div><div class="foot">agent-for-long-run · v1 · 每页一个主论点</div></section>
+<section class="slide"><div class="bar"></div><div class="tag">总框架</div><h2>五层护栏，让长任务可控</h2><p class="sub">Agent = LLM × Harness × Memory × Tools</p><div class="side">总框架</div><div class="card"><ul><li>任务契约：目标、非目标、验收、权限。</li><li>上下文管理：按需检索，关键事实落盘。</li><li>执行循环：Plan → Act → Observe → Revise。</li><li>质量与安全：Hook、测试、diff、人工 QA。</li><li>交接机制：state file、README/AGENTS、文档生命周期。</li></ul></div><div class="foot">agent-for-long-run · v1 · 证据 / 权限 / 停止条件 / 交接</div></section>
+<section class="slide"><div class="bar"></div><div class="tag">Idea 01</div><h2>长程 Agent 是工程系统</h2><p class="sub">P(success) ≈ p^T</p><div class="side">工程系统</div><div class="card"><ul><li>单步小概率错误会被长链路放大。</li><li>LLM 负责理解生成；Harness 管循环权限预算；Memory 管状态交接；Tools 给外部证据。</li><li>落地：把大目标拆成资料盘点、候选 idea、确认、文件落盘、生成、审查。</li></ul></div><div class="foot">agent-for-long-run · v1</div></section>
+<section class="slide"><div class="bar"></div><div class="tag">Idea 02</div><h2>上下文有稳定工作半径</h2><p class="sub">relations(n) ≈ n²</p><div class="side">上下文</div><div class="card"><ul><li>长上下文不是免费记忆，资料越多，关系和冲突越复杂。</li><li>Attention 找关系；FFN 组合输出；验真要回到文件、工具和人。</li><li>方法：Smart Zone 执行；Dumb Zone 前 clear；compact 只作短期续航。</li></ul></div><div class="foot">agent-for-long-run · v1</div></section>
+<section class="slide"><div class="bar"></div><div class="tag">Idea 03</div><h2>先做任务契约</h2><p class="sub">好问题 = 事实 + 分叉 + 推荐 + 影响</p><div class="side">契约</div><div class="card"><ul><li>模糊 brief 不能直接执行；Agent 先读资料，再一次只问一个关键问题。</li><li>人类拍板价值取舍、合规、指标口径、上线范围和历史回填。</li><li>记录 negative decisions 与 out of scope，防止后续重新扩张。</li></ul></div><div class="foot">agent-for-long-run · v1</div></section>
+<section class="slide"><div class="bar"></div><div class="tag">Idea 04</div><h2>PRD 是目的地，Kanban/DAG 是路线</h2><p class="sub">R → D → P → I</p><div class="side">计划</div><div class="card"><ul><li>PRD 定义完成后的样子，Kanban/DAG 定义抵达路径。</li><li>优先垂直切片，让一个 ticket 穿过数据、服务、界面和测试。</li><li>避免横向切片把端到端反馈拖到最后。</li></ul></div><div class="foot">agent-for-long-run · v1</div></section>
+<section class="slide"><div class="bar"></div><div class="tag">Idea 05</div><h2>Agent Loop 必须接地</h2><p class="sub">Plan → Act → Observe → Revise</p><div class="side">Loop</div><div class="card"><ul><li>Observe 要读取测试、日志、diff、截图、数据库返回和人工 QA。</li><li>从 backlog 里选已解锁且优先级最高的任务。</li><li>循环需要时间、成本、错误次数、权限边界和停止信号。</li></ul></div><div class="foot">agent-for-long-run · v1</div></section>
+<section class="slide"><div class="bar"></div><div class="tag">Idea 06</div><h2>子代理的关键是共享状态</h2><p class="sub">Orchestrator + Shared State + Merge Protocol</p><div class="side">协作</div><div class="card"><ul><li>父代理保留主线，子代理处理局部高噪声任务。</li><li>共享白板记录负责人、证据、验证状态、阻塞和禁止触碰范围。</li><li>子代理回传 evidence packet，父代理不能把摘要当权威。</li></ul></div><div class="foot">agent-for-long-run · v1</div></section>
+<section class="slide"><div class="bar"></div><div class="tag">Idea 07</div><h2>记忆与交接要落在文件里</h2><p class="sub">working memory → state file → repo docs → retrieval</p><div class="side">记忆</div><div class="card"><ul><li>长程任务会暂停、换会话、换模型、换执行者。</li><li>AGENTS.md / README 是入口；state file 记录目标、决策、证据、下一步。</li><li>文档需有 active、superseded、archived、closed 状态。</li></ul></div><div class="foot">agent-for-long-run · v1</div></section>
+<section class="slide"><div class="bar"></div><div class="tag">Idea 08</div><h2>Harness 和 Hook 把确定性搬到系统外</h2><p class="sub">Verification + Evaluation</p><div class="side">质量</div><div class="card"><ul><li>Verification：tests、typecheck、build、migration、browser smoke check。</li><li>Evaluation：code review、manual QA、业务确认、合规风险判断。</li><li>权限阶梯：read-only first → sandbox → staging → production。</li></ul></div><div class="foot">agent-for-long-run · v1</div></section>
+<section class="slide"><div class="bar"></div><div class="tag">Idea 09</div><h2>让代码库适合 Agent 工作</h2><p class="sub">Agent-readable repo</p><div class="side">代码库</div><div class="card"><ul><li>README/AGENTS 给入口，模块文档说明接口、边界、测试命令和常见坑。</li><li>Deep module：接口小而稳定，内部复杂度被封装和测试。</li><li>保持 small self-contained PR，让人类能审、能回滚。</li></ul></div><div class="foot">agent-for-long-run · v1</div></section>
+<section class="slide"><div class="bar"></div><div class="tag">Idea 10</div><h2>风险清单：无边界、无证据、无刹车最危险</h2><p class="sub">症状 → 根因 → 防法</p><div class="side">风险</div><div class="card"><ul><li>目标漂移：任务契约、out of scope、negative decisions。</li><li>上下文污染：切小任务、clear、状态落盘、按需检索。</li><li>循环失控：预算、错误上限、no more tasks、error-to-issue。</li><li>伪验证：测试、diff、日志、截图、人工 QA。</li></ul></div><div class="foot">agent-for-long-run · v1</div></section>
+<section class="slide"><div class="bar"></div><div class="tag">行动建议</div><h2>从一个高频任务开始，把流程固化成系统</h2><p class="sub">1 个对齐段 + 3 个 AFK issue + 每项验收证据</p><div class="side">行动</div><div class="card"><ul><li>选择每周重复、材料多、交付可验收的任务。</li><li>先让 Agent 提 recommendation-backed questions，再由人类确认契约。</li><li>拆成垂直切片 AFK issue，写清输入、输出、权限、测试和停止条件。</li><li>交付后 fresh context review，并更新 state file 与文档状态。</li></ul></div><div class="foot">agent-for-long-run · v1</div></section>
+</body>
+</html>
